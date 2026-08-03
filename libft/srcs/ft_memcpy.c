@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epandele <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: epandele <epandele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:05:51 by epandele          #+#    #+#             */
-/*   Updated: 2024/12/30 12:07:06 by epandele         ###   ########.fr       */
+/*   Updated: 2026/08/03 14:19:13 by epandele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
 //#include <stddef.h>
 

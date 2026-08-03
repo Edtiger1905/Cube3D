@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epandele <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: epandele <epandele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:17:04 by epandele          #+#    #+#             */
-/*   Updated: 2024/12/27 15:05:23 by epandele         ###   ########.fr       */
+/*   Updated: 2026/08/03 14:19:13 by epandele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
