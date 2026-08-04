@@ -2,7 +2,8 @@ NAME		= cub3d
 
 SRCDIR		= srcs
 OBJDIR		= obj
-SRCS		= main.c
+SRCS		= main.c utils.c validations.c
+				
 
 OBJS		= ${SRCS:%.c=$(OBJDIR)/%.o}
 
