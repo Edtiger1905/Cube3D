@@ -18,17 +18,17 @@ CFLAGS = -Wall -Wextra -Werror
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
-	${CC} ${CFLAGS} -c $< -o $@
+	@${CC} ${CFLAGS} -c $< -o $@
 
 $(NAME): ${OBJS}
-	ar rcs ${NAME} ${OBJS}
+	@ar rcs ${NAME} ${OBJS}
 
 all:	${NAME}
 
 clean:
-	${RM} -r $(OBJDIR)
+	@${RM} -r $(OBJDIR)
 
 fclean:	clean
-	${RM} ${NAME}
+	@${RM} ${NAME}
 
 re:		fclean all
