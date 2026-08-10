@@ -12,12 +12,15 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 GNL_DIR     = GNL
 GNL         = $(GNL_DIR)/gnl.a
 
+MLX_DIR     = mlx
+MLX         = $(MLX_DIR)/libmlx.a
+MLX_FLAGS   = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
+
 CC          = cc
 RM          = rm -f
 
 CFLAGS      = -Wall -Wextra -Werror
-# Aggiunto -I$(GNL_DIR) per permettere a cub3d di trovare get_next_line.h
-INCLUDES    = -Iincludes -I$(LIBFT_DIR)/includes -I$(GNL_DIR)
+INCLUDES    = -Iincludes -I$(LIBFT_DIR)/includes -I$(GNL_DIR) -I$(MLX_DIR)
 
 # Colori
 GREEN   = \033[0;32m
@@ -27,7 +30,7 @@ CYAN    = \033[0;36m
 BOLD    = \033[1m
 RESET   = \033[0m
 
-all: libft gnl $(NAME)
+all: libft gnl mlx $(NAME)
 
 libft:
 	@printf "$(CYAN)$(BOLD)Compilando libft...$(RESET)\n"
@@ -39,6 +42,11 @@ gnl:
 	@$(MAKE) -C $(GNL_DIR) --no-print-directory
 	@printf "$(GREEN)✔ gnl pronto!$(RESET)\n"
 
+mlx:
+	@printf "$(CYAN)$(BOLD)Compilando mlx...$(RESET)\n"
+	@$(MAKE) -C $(MLX_DIR) --no-print-directory
+	@printf "$(GREEN)✔ mlx pronta!$(RESET)\n"
+
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	@printf "$(YELLOW)Compilando: $<$(RESET)\n"
@@ -46,7 +54,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 $(NAME): ${OBJS}
 	@printf "$(CYAN)$(BOLD)Creazione dell'eseguibile $(NAME)...$(RESET)\n"
-	@${CC} ${CFLAGS} ${OBJS} ${LIBFT} ${GNL} -o ${NAME}
+	@${CC} ${CFLAGS} ${OBJS} ${LIBFT} ${GNL} ${MLX_FLAGS} -o ${NAME}
 	@printf "$(GREEN)$(BOLD)✔ $(NAME) compilato con successo!$(RESET)\n"
 
 clean:
@@ -54,15 +62,16 @@ clean:
 	@${RM} -r $(OBJDIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
 	@$(MAKE) -C $(GNL_DIR) clean --no-print-directory
+	@$(MAKE) -C $(MLX_DIR) clean --no-print-directory # NUOVO
 	@printf "$(GREEN)✔ Oggetti cancellati!$(RESET)\n"
 
 fclean: clean
 	@printf "$(RED)Cancellando $(NAME)...$(RESET)\n"
 	@${RM} ${NAME}
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
-	@$(MAKE) -C $(GNL_DIR) fclean --no-print-directory
+	@$(MAKE) -C $(GNL_DIR) fclean --no-print-directory	
 	@printf "$(GREEN)✔ Tutto pulito!$(RESET)\n"
 
 re: fclean all
 
-.PHONY: all clean fclean re libft gnl
+.PHONY: all clean fclean re libft gnl mlx
