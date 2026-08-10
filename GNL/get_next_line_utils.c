@@ -12,13 +12,13 @@
 
 #include "get_next_line.h"
 
-int	ft_strlen(const char *s)
+int gnl_ft_strlen(const char *s)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!s)
-		return(0);
+		return (0);
 	while (s[i] != '\0')
 		i++;
 	return (i);
@@ -31,13 +31,13 @@ int	ft_strlen(const char *s)
  * Riga 11: Ritorna il numero totale di caratteri (escluso '\0')
  */
 
-char	*ft_strjoin(char *s1, char *s2)
+char *gnl_ft_strjoin(char *s1, char *s2)
 {
-	char	*str;
-	size_t	i;
-	size_t	j;
+	char *str;
+	size_t i;
+	size_t j;
 
-	str = (char *)malloc(sizeof(*s1) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	str = (char *)malloc(sizeof(*s1) * (gnl_ft_strlen(s1) + gnl_ft_strlen(s2) + 1));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -73,13 +73,13 @@ char	*ft_strjoin(char *s1, char *s2)
  * Riga 41: Ritorna la stringa concatenata
  */
 
-char	*ft_strchr(const char *s, char c)
+char *gnl_ft_strchr(const char *s, char c)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	if(!s)
-		return(NULL);
+	if (!s)
+		return (NULL);
 	while (s[i] != '\0')
 	{
 		if (s[i] == c)
@@ -100,14 +100,14 @@ char	*ft_strchr(const char *s, char c)
  * Riga 58: Se non trova il carattere, ritorna NULL
  */
 
-char	*ft_strdup(const char *src)
+char *gnl_ft_strdup(const char *src)
 {
-	char	*dup;
-	size_t	i;
+	char *dup;
+	size_t i;
 
 	if (!src)
 		return (NULL);
-	dup = (char *)malloc(sizeof(char) * (ft_strlen(src) + 1));
+	dup = (char *)malloc(sizeof(char) * (gnl_ft_strlen(src) + 1));
 	if (!dup)
 		return (NULL);
 	i = 0;

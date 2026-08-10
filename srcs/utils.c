@@ -1,6 +1,6 @@
 #include "cube3d.h"
 
-void putstr_error_and_exit(char *error, int exit_code)
+void perror_and_exit(char *error, int exit_code)
 {
     ft_putstr_fd("Error:\n", 1);
     ft_putstr_fd(error, 1);
