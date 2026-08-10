@@ -2,17 +2,8 @@
 
 int main(int argc, char **argv)
 {
-    int fd;
-    char *src_map;
+    t_cube3d cube3d;
 
-    if (argc != 2)
-        perror_and_exit("Please set the path of the map", 1);
-    src_map = argv[1];
-    if (!is_cub(src_map))
-        perror_and_exit("File must finish with .cub extension", 1);
-    fd = open(src_map, O_RDONLY);
-    if (fd < 0)
-        perror_and_exit("File not open", 1);
-
+    cube3d.fd = validate_argv_and_return_fd(argc, argv);
     return 0;
 }
