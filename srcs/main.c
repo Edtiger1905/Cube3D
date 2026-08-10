@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     if (!is_cub(src_map))
         perror_and_exit("File must finish with .cub extension", 1);
     fd = open(src_map, O_RDONLY);
-    if (fd <= 0)
+    if (fd < 0)
         perror_and_exit("File not open", 1);
 
     return 0;
