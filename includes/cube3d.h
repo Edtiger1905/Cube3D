@@ -13,12 +13,19 @@
 typedef struct s_cube3d
 {
     int fd;
+    void *mlx_ptr;
 } t_cube3d;
 
-// UTILS
-void perror_and_exit(char *error, int exit_code);
+// free_memory.c
+void free_cube3d(t_cube3d *cube3d);
 
-// VALIDATOR
-int validate_argv_and_return_fd(int argc, char **argv);
+// init_cube3d.c
+t_cube3d init_cube3d(int argc, char **argv);
+
+// utils.c
+void perror_and_exit(t_cube3d *cube3d, char *msg_error, int exit_code);
+
+// validator.c
+int validate_and_return_fd(int argc, char **argv);
 
 #endif

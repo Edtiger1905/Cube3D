@@ -2,7 +2,7 @@ NAME        = cub3d
 
 SRCDIR      = srcs
 OBJDIR      = obj
-SRCS        = main.c utils.c validator.c
+SRCS        = main.c utils.c validator.c init_cube3d.c free_memory.c
                 
 OBJS        = ${SRCS:%.c=$(OBJDIR)/%.o}
 

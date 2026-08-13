@@ -3,8 +3,8 @@
 int main(int argc, char **argv)
 {
     t_cube3d cube3d;
-    (void)cube3d;
 
-    cube3d.fd = validate_argv_and_return_fd(argc, argv);
-    return 0;
+    cube3d = init_cube3d(argc, argv);
+    free_cube3d(&cube3d);
+    return (0);
 }
