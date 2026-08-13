@@ -18,7 +18,7 @@ int validate_argv_and_return_fd(int argc, char **argv)
     char *src_map;
 
     if (argc != 2)
-        perror_and_exit("[VALIDATOR]: Please set the path of the map", 1);
+        perror_and_exit("[VALIDATOR]: Accepts only one argument: Path of the map ", 1);
     src_map = argv[1];
     if (!is_cub(src_map))
         perror_and_exit("[VALIDATOR]: File must finish with .cub extension", 1);
