@@ -1,9 +1,10 @@
-NO./textures/north.xmp
+NO ./textures/north.xmp
 SO ./textures/south.xmp
 EA ./textures/east.xmp
 WE ./textures/west.xmp
 
 F 220,100,0
 C 225,30,0
+SO ./textures/south.xmp
 
 ---------- MAPPA ----------

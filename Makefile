@@ -2,7 +2,7 @@ NAME        = cub3d
 
 SRCDIR      = srcs
 OBJDIR      = obj
-SRCS        = main.c utils.c validator.c init_cube3d.c free_memory.c
+SRCS        = main.c utils.c validator.c init_cube3d.c free_memory.c init_textures.c parser_rgb_texture.c parser_texture.c parser_utils.c
                 
 OBJS        = ${SRCS:%.c=$(OBJDIR)/%.o}
 
