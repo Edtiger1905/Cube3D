@@ -1,5 +1,7 @@
 #include "cube3d.h"
 
+// TODO: se finisco le texture finire il ciclo per poi leggere la mappa
+// TODO: organizzare le funzioni di parsing perche' superano i 25 righe alcune e sono piu' di 5 funzioni per file
 void init_textures(t_cube3d *cube3d)
 {
     char *line;
