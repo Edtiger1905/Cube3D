@@ -9,3 +9,15 @@ void perror_and_exit(t_cube3d *cube3d, char *msg_error, int exit_code)
         free_cube3d(cube3d);
     exit(exit_code);
 }
+
+int matrix_length(char **matrix)
+{
+    int i;
+
+    i = 0;
+    if (!matrix)
+        return (i);
+    while (matrix[i])
+        i++;
+    return (i);
+}

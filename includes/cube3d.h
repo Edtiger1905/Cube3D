@@ -24,12 +24,11 @@ typedef struct s_cube3d
 {
     int fd;
     void *mlx_ptr;
-    int width;
-    int height;
     t_textures textures;
 } t_cube3d;
 
 // free_memory.c
+void free_matrix(char **matrix);
 void free_cube3d(t_cube3d *cube3d);
 
 // init_cube3d.c
@@ -38,19 +37,18 @@ t_cube3d init_cube3d(int argc, char **argv);
 // init_textures.c
 void init_textures(t_cube3d *cube3d);
 
-// parser_rgb_texture.c
-void parser_rgb_texture(t_cube3d *cube3d, char **line);
+// parser_rgb_utils.c
+int is_valid_str_rgb(char *str_rgb);
+int is_valid_rgb(int *rgb, int len);
+
+// parser_rgb.c
+void parser_rgb(t_cube3d *cube3d, char **tmp);
 
 // parser_texture.c
-void parser_texture(t_cube3d *cube3d, char **line);
-
-// parser_utils.c
-int matrix_length(char **matrix);
-void free_matrix(char **matrix);
-void flush_gnl(int fd);
-void free_matrix_and_flush_gnl(t_cube3d *cube3d, char **matrix);
+void parser_texture(t_cube3d *cube3d, char **tmp);
 
 // utils.c
+int matrix_length(char **matrix);
 void perror_and_exit(t_cube3d *cube3d, char *msg_error, int exit_code);
 
 // validator.c

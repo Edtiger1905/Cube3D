@@ -1,9 +1,8 @@
 #include "cube3d.h"
 
-// TODO: se finisco le texture finire il ciclo per poi leggere la mappa
-// TODO: organizzare le funzioni di parsing perche' superano i 25 righe alcune e sono piu' di 5 funzioni per file
 void init_textures(t_cube3d *cube3d)
 {
+    char *tmp;
     char *line;
     t_textures textures;
 
@@ -16,19 +15,20 @@ void init_textures(t_cube3d *cube3d)
     cube3d->textures = textures;
     while ((line = get_next_line(cube3d->fd)))
     {
-        if (ft_strncmp(line, "NO", 2) == 0)
-            parser_texture(cube3d, &line);
-        else if (ft_strncmp(line, "SO", 2) == 0)
-            parser_texture(cube3d, &line);
-        else if (ft_strncmp(line, "EA", 2) == 0)
-            parser_texture(cube3d, &line);
-        else if (ft_strncmp(line, "WE", 2) == 0)
-            parser_texture(cube3d, &line);
-        else if (ft_strncmp(line, "F", 1) == 0)
-            parser_rgb_texture(cube3d, &line);
-        else if (ft_strncmp(line, "C", 1) == 0)
-            parser_rgb_texture(cube3d, &line);
-        if (line)
-            free(line);
+        tmp = ft_strtrim(line, "\n");
+        free(line);
+        if (ft_strncmp(tmp, "NO", 2) == 0)
+            parser_texture(cube3d, &tmp);
+        else if (ft_strncmp(tmp, "SO", 2) == 0)
+            parser_texture(cube3d, &tmp);
+        else if (ft_strncmp(tmp, "EA", 2) == 0)
+            parser_texture(cube3d, &tmp);
+        else if (ft_strncmp(tmp, "WE", 2) == 0)
+            parser_texture(cube3d, &tmp);
+        else if (ft_strncmp(tmp, "F", 1) == 0)
+            parser_rgb(cube3d, &tmp);
+        else if (ft_strncmp(tmp, "C", 1) == 0)
+            parser_rgb(cube3d, &tmp);
+        free(tmp);
     }
 }

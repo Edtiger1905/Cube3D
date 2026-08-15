@@ -1,74 +1,56 @@
 #include "cube3d.h"
 
-/*
-    ----------  TEXTURES    ----------
-    Durante il ciclo in init_textures, se viene identificata una stringa
-    corrispondente a una texture (NO, SO, EA, WE), viene chiamata parser_texture.
-    Questa funzione esegue un primo parsing rimuovendo il '\n' tramite ft_strtrim,
-    seguito da uno split per separare l'identificatore (es. "NO") dal percorso del file.
-    Dopo aver verificato che ci siano esattamente due elementi e che il file esista,
-    la funzione set_texture si occupa di caricare l'immagine XPM e salvarne
-    il puntatore nell'attributo corrispondente della struttura t_textures.
-*/
-
-static void duplicate_texture_error(t_cube3d *cube3d, char **matrix, void *img_ptr)
+typedef struct s_context
 {
-    if (img_ptr)
-        mlx_destroy_image(cube3d->mlx_ptr, img_ptr);
-    free_matrix_and_flush_gnl(cube3d, matrix);
-    perror_and_exit(cube3d, "[PARSER TEXTURE] duplicate texture", 1);
+    char **matrix;
+    t_cube3d *cube3d;
+} t_context;
+
+static void free_parser_texture(t_context context)
+{
+    if (context.matrix)
+        free_matrix(context.matrix);
 }
 
-static void set_texture(t_cube3d *cube3d, char **matrix)
+static void set_texture(t_context context, void **texture)
 {
+    int width;
+    int height;
     void *img_ptr;
 
-    img_ptr = mlx_xpm_file_to_image(cube3d->mlx_ptr, matrix[1], &cube3d->width, &cube3d->height);
+    if (*texture)
+        return (free_parser_texture(context), perror_and_exit(context.cube3d, "Duplicate texture configuration: Texture ID is already set", 1));
+    img_ptr = mlx_xpm_file_to_image(context.cube3d->mlx_ptr, context.matrix[1], &width, &height);
     if (!img_ptr)
-        (free_matrix_and_flush_gnl(cube3d, matrix), perror_and_exit(cube3d, "[PARSER TEXTURE] invalid or corrupted xmp file", 1));
-    if (ft_strncmp(matrix[0], "NO", 2) == 0)
-    {
-        if (cube3d->textures.north)
-            duplicate_texture_error(cube3d, matrix, img_ptr);
-        cube3d->textures.north = img_ptr;
-    }
-    else if (ft_strncmp(matrix[0], "SO", 2) == 0)
-    {
-        if (cube3d->textures.south)
-            duplicate_texture_error(cube3d, matrix, img_ptr);
-        cube3d->textures.south = img_ptr;
-    }
-    else if (ft_strncmp(matrix[0], "EA", 2) == 0)
-    {
-        if (cube3d->textures.east)
-            duplicate_texture_error(cube3d, matrix, img_ptr);
-        cube3d->textures.east = img_ptr;
-    }
-    else if (ft_strncmp(matrix[0], "WE", 2) == 0)
-    {
-        if (cube3d->textures.west)
-            duplicate_texture_error(cube3d, matrix, img_ptr);
-        cube3d->textures.west = img_ptr;
-    }
+        return (free_parser_texture(context), perror_and_exit(context.cube3d, "Invalid XPM file: Could not load the image with MiniLibX", 1));
+    *texture = img_ptr;
 }
 
-void parser_texture(t_cube3d *cube3d, char **line)
+void parser_texture(t_cube3d *cube3d, char **tmp)
 {
-    int texture_fd;
-    char *tmp;
-    char **matrix;
+    int fd;
+    t_context context;
 
-    tmp = ft_strtrim(*line, "\n");
-    free(*line);
-    *line = NULL;
-    matrix = ft_split(tmp, ' ');
-    free(tmp);
-    if (matrix_length(matrix) != 2)
-        (free_matrix_and_flush_gnl(cube3d, matrix), perror_and_exit(cube3d, "[PARSER TEXTURE] cardinal point texture must be 'X path_of_texture'", 1));
-    texture_fd = open(matrix[1], O_RDONLY);
-    if (texture_fd < 0)
-        (free_matrix_and_flush_gnl(cube3d, matrix), perror_and_exit(cube3d, "[PARSER TEXTURE] file not open", 1));
-    close(texture_fd);
-    set_texture(cube3d, matrix);
-    free_matrix(matrix);
+    context.cube3d = cube3d;
+    context.matrix = ft_split(*tmp, ' ');
+    free(*tmp);
+    *tmp = NULL;
+    if (matrix_length(context.matrix) != 2)
+        return (free_parser_texture(context), perror_and_exit(cube3d, "Invalid texture format: Expected '<ID> <path_to_texture>'", 1));
+
+    fd = open(context.matrix[1], O_RDONLY);
+    if (fd < 0)
+        return (free_parser_texture(context), perror_and_exit(cube3d, "Texture file error: Cannot open or find the specified file", 1));
+    close(fd);
+
+    if (ft_strncmp(context.matrix[0], "NO", 2) == 0)
+        set_texture(context, &context.cube3d->textures.north);
+    else if (ft_strncmp(context.matrix[0], "SO", 2) == 0)
+        set_texture(context, &context.cube3d->textures.south);
+    else if (ft_strncmp(context.matrix[0], "EA", 2) == 0)
+        set_texture(context, &context.cube3d->textures.east);
+    else if (ft_strncmp(context.matrix[0], "WE", 2) == 0)
+        set_texture(context, &context.cube3d->textures.west);
+
+    free_parser_texture(context);
 }

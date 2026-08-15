@@ -1,34 +1,42 @@
-NAME        = cub3d
+NAME		=	cub3d
 
-SRCDIR      = srcs
-OBJDIR      = obj
-SRCS        = main.c utils.c validator.c init_cube3d.c free_memory.c init_textures.c parser_rgb_texture.c parser_texture.c parser_utils.c
+SRCDIR		=	srcs
+OBJDIR		=	obj
+SRCS		=	main.c \
+				utils.c \
+				validator.c \
+				init_cube3d.c \
+				free_memory.c \
+				init_textures.c \
+				parser_texture.c \
+				parser_rgb.c \
+				parser_rgb_utils.c	
                 
-OBJS        = ${SRCS:%.c=$(OBJDIR)/%.o}
+OBJS		=	${SRCS:%.c=$(OBJDIR)/%.o}
 
-LIBFT_DIR   = libft
-LIBFT       = $(LIBFT_DIR)/libft.a
+LIBFT_DIR	=	libft
+LIBFT		=	$(LIBFT_DIR)/libft.a
 
-GNL_DIR     = GNL
-GNL         = $(GNL_DIR)/gnl.a
+GNL_DIR		=	GNL
+GNL			=	$(GNL_DIR)/gnl.a
 
-MLX_DIR     = mlx
-MLX         = $(MLX_DIR)/libmlx.a
-MLX_FLAGS   = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
+MLX_DIR		=	mlx
+MLX			=	$(MLX_DIR)/libmlx.a
+MLX_FLAGS	=	-L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
-CC          = cc
-RM          = rm -f
+CC			=	cc
+RM			=	rm -f
 
-CFLAGS      = -Wall -Wextra -Werror
-INCLUDES    = -Iincludes -I$(LIBFT_DIR)/includes -I$(GNL_DIR) -I$(MLX_DIR)
+CFLAGS		=	-Wall -Wextra -Werror
+INCLUDES	=	-Iincludes -I$(LIBFT_DIR)/includes -I$(GNL_DIR) -I$(MLX_DIR)
 
 # Colori
-GREEN   = \033[0;32m
-YELLOW  = \033[0;33m
-RED     = \033[0;31m
-CYAN    = \033[0;36m
-BOLD    = \033[1m
-RESET   = \033[0m
+GREEN		=	\033[0;32m
+YELLOW		=	\033[0;33m
+RED			=	\033[0;31m
+CYAN		=	\033[0;36m
+BOLD		=	\033[1m
+RESET		=	\033[0m
 
 all: libft gnl mlx $(NAME)
 
