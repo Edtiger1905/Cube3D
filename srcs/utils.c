@@ -21,3 +21,19 @@ int matrix_length(char **matrix)
         i++;
     return (i);
 }
+
+int is_map(char *line)
+{
+    int i;
+
+    if (!line || line[0] == '\0')
+        return (0);
+    i = 0;
+    while (line[i])
+    {
+        if (line[i] != ' ' && line[i] != '0' && line[i] != '1' && line[i] != 'N' && line[i] != 'S' && line[i] != 'E' && line[i] != 'W')
+            return (0);
+        i++;
+    }
+    return (1);
+}

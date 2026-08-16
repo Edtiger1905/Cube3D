@@ -12,6 +12,7 @@
 
 typedef struct s_textures
 {
+    int textures_completed;
     void *north;
     void *south;
     void *east;
@@ -34,8 +35,11 @@ void free_cube3d(t_cube3d *cube3d);
 // init_cube3d.c
 t_cube3d init_cube3d(int argc, char **argv);
 
-// init_textures.c
+// init_texture.c
 void init_textures(t_cube3d *cube3d);
+
+// parser_map.c
+void parser_map(t_cube3d *cube3d);
 
 // parser_rgb_utils.c
 int is_valid_str_rgb(char *str_rgb);
@@ -48,6 +52,7 @@ void parser_rgb(t_cube3d *cube3d, char **tmp);
 void parser_texture(t_cube3d *cube3d, char **tmp);
 
 // utils.c
+int is_map(char *line);
 int matrix_length(char **matrix);
 void perror_and_exit(t_cube3d *cube3d, char *msg_error, int exit_code);
 
