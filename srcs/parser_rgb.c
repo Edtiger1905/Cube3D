@@ -1,5 +1,15 @@
 #include "cube3d.h"
 
+/*
+    PARSING DEI COLORI
+
+    Qua cambia la cosa perche' non leggiamo un file, cioe' una texture, se no che stiamo leggendo dei colori "rgb". Quello che fa la funzione parser_rgb
+    e' prendere la riga ad esempio "F 0,1,2" e la splita in due {"F", "0,1,2"}, controlliamo se il secondo elemento e' composto solo da numeri e virgole,
+    poi splita il secondo elemento per avere qualcosa tipo, matrix = {"F", "0,1,2"}, rgb_matrix = {"0", "1", "2"}, questo ci permette di manipolare i singoli
+    elementi di rgb_matrix perche' in questa maniera tramite la funzione rgb_atoi trasformiamo questi numeri in stringhe in numeri interi con ft_atoi.
+    Creiamo il colore RGB con rgb_color = (R << 16) | (G << 8) | B; e poi lo salviamo come intero nel corretto attributo
+*/
+
 typedef struct s_context
 {
     int *rgb;

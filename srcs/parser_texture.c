@@ -1,5 +1,13 @@
 #include "cube3d.h"
 
+/*
+    PARSING DELLE TEXTURE
+
+    Qua stiamo leggendo la riga di una texture. ad una riga puo' essere "NO ./textures/north.xmp9", la funzione parser_texture splita questa stringa
+    a una matrice {"NO", "./textures/north.xmp9"} questo in modo da poter separare il nome della texture con il path di questa. Controlliamo che il file esista
+    e si possa aprire per poi creare l'immagine e assegnarla al giusto attributo
+*/
+
 typedef struct s_context
 {
     char **matrix;

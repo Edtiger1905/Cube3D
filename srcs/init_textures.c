@@ -1,5 +1,16 @@
 #include "cube3d.h"
 
+/*
+    PARSING DELLE TEXTURE E COLORI
+
+    Allora, la funzione init_textures ha come obbiettivo grazie a parser_loop, parser_texture e parser_rgb di
+    leggere le righe, trovare coincidenze ad esempio "NO ./textures/north.xmp9", appena legge "NO" chiama a parser_texture.
+    Leggi "parser_texture.c" e "parser_rgb.c" per capire come funzionano. Dopo aver letto fa un controllo per sapere se quello
+    che sta leggendo non e' piu' un texture se no che e' una linea della mappa, in quel momento controlla se ci sono tutte le textures
+    e manda un errore in caso di mancanza di qualcuna, altrimenti chiude il file (Questo perche' cosi al leggere la mappa
+    leggiamo di nuovo il file e quando troviamo quella coincidenza iniziamo a fare il parsing della mappa) e si chiude il ciclo
+*/
+
 static int are_textures_completed(t_textures textures)
 {
     if (!textures.north || !textures.south || !textures.east || !textures.west || textures.floor == -1 || textures.ceiling == -1)
