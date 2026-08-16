@@ -84,6 +84,8 @@ void parser_rgb(t_cube3d *cube3d, char **tmp)
     if (matrix_length(context.rgb_matrix) != 3)
         return (free_parser_rgb(context), perror_and_exit(cube3d, "Invalid RGB format: Expected exactly 3 values separated by commas", 1));
     context.rgb = malloc(sizeof(int) * 3);
+    if (!context.rgb)
+        return (free_parser_rgb(context), perror_and_exit(cube3d, "Malloc error", 1));
     rgb_atoi(context);
     if (!is_valid_rgb(context.rgb, 3))
         return (free_parser_rgb(context), perror_and_exit(cube3d, "Invalid RGB range: Values must be between 0 and 255", 1));
