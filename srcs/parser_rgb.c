@@ -100,8 +100,8 @@ void parser_rgb(t_cube3d *cube3d, char *line)
     t_context context;
 
     context.cube3d = cube3d;
-    context.rgb = malloc(sizeof(int) * 3);
     context.matrix = parser_rgb_initialize_matrix(cube3d, line);
+    context.rgb = malloc(sizeof(int) * 3);
     if (!context.rgb)
         return (free_helper(&context), perror_and_exit(cube3d, "[PARSER RGB] Failed to initialize RGB"));
     context.rgb_matrix = ft_split(context.matrix[1], ',');

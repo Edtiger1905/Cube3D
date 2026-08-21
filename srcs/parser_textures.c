@@ -26,29 +26,57 @@
 ** ============================================================================
 */
 
+static int are_textures_completed(t_textures textures)
+{
+    if (!textures.north || !textures.south ||
+        !textures.east || !textures.west ||
+        textures.floor == -1 || textures.ceiling == -1)
+        return (0);
+    return (1);
+}
+
+static int parser_textures_helper(t_cube3d *cube3d, char *line)
+{
+    if (ft_strncmp(line, "NO", 2) == 0 ||
+        ft_strncmp(line, "SO", 2) == 0 ||
+        ft_strncmp(line, "EA", 2) == 0 ||
+        ft_strncmp(line, "WE", 2) == 0)
+    {
+        parser_texture(cube3d, line);
+        return (1);
+    }
+    if (ft_strncmp(line, "F", 1) == 0 ||
+        ft_strncmp(line, "C", 1) == 0)
+    {
+        parser_rgb(cube3d, line);
+        return (1);
+    }
+
+    return (0);
+}
+
 void parser_textures(t_cube3d *cube3d)
 {
     char *line;
+    char *tmp;
 
     open_file_and_setconfig(cube3d);
     while ((line = get_next_line(cube3d->fd)))
     {
-        if (ft_strncmp(line, "NO", 2) == 0 ||
-            ft_strncmp(line, "SO", 2) == 0 ||
-            ft_strncmp(line, "EA", 2) == 0 ||
-            ft_strncmp(line, "WE", 2) == 0)
+        tmp = ft_strtrim(line, "\n");
+        if (is_map(tmp))
         {
-            parser_texture(cube3d, line);
-            continue;
+            free(tmp);
+            free(line);
+            break;
         }
-        if (ft_strncmp(line, "F", 1) == 0 ||
-            ft_strncmp(line, "C", 1) == 0)
-        {
-            parser_rgb(cube3d, line);
+        free(tmp);
+        if (parser_textures_helper(cube3d, line))
             continue;
-        }
         free(line);
     }
+    if (!are_textures_completed(cube3d->textures))
+        perror_and_exit(cube3d, "[PARSER TEXTURES] Missing textures");
     close(cube3d->fd);
     cube3d->fd = -1;
 }

@@ -72,13 +72,13 @@ void print_map(t_cube3d *cube3d)
     if (!cube3d || !cube3d->map.matrix)
         return;
     i = 0;
-    printf("\n--- START OF THE MAP ---\n");
+    printf("--- START OF THE MAP ---\n");
     while (cube3d->map.matrix[i])
     {
         printf("%s\n", cube3d->map.matrix[i]);
         i++;
     }
-    printf("--- END OF THE MAP (%d lines) ---\n\n", i);
+    printf("--- END OF THE MAP (%d lines) ---\n", i);
 }
 
 void parser_map(t_cube3d *cube3d)
