@@ -12,6 +12,7 @@
 
 #include "get_next_line.h"
 #include <stdio.h>
+
 static char *read_buffer(int fd, char *buffer)
 {
 	char *s1;
@@ -24,18 +25,22 @@ static char *read_buffer(int fd, char *buffer)
 	while (bytes_read > 0 && !gnl_ft_strchr(buffer, '\n'))
 	{
 		bytes_read = read(fd, s1, BUFFER_SIZE);
-		if (bytes_read <= 0)
+		if (bytes_read == -1)
 		{
 			free(s1);
 			free(buffer);
 			return (NULL);
 		}
+		if (bytes_read == 0)
+			break;
+
 		s1[bytes_read] = '\0';
 		buffer = gnl_ft_strjoin(buffer, s1);
 	}
 	free(s1);
 	return (buffer);
 }
+
 /*
  * read_buffer: legge dal file descriptor fino a trovare '\n' o EOF
  * Righe 5-7: Dichiarazione variabili
