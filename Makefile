@@ -2,25 +2,24 @@ NAME		=	cub3d
 
 SRCDIR		=	srcs
 OBJDIR		=	obj
-SRCS		=	main.c \
-				utils.c \
-				validator.c \
+SRCS		=	free_memory.c \
 				init_cube3d.c \
-				free_memory.c \
-				init_textures.c \
-				parser_texture.c \
+				main.c \
 				parser_rgb.c \
-				parser_rgb_utils.c	
+				parser_texture.c \
+				parser_textures.c \
+				utils.c
+
                 
 OBJS		=	${SRCS:%.c=$(OBJDIR)/%.o}
 
-LIBFT_DIR	=	libft
+LIBFT_DIR	=	$(SRCDIR)/libft
 LIBFT		=	$(LIBFT_DIR)/libft.a
 
-GNL_DIR		=	GNL
+GNL_DIR		=	$(SRCDIR)/GNL
 GNL			=	$(GNL_DIR)/gnl.a
 
-MLX_DIR		=	mlx
+MLX_DIR		=	$(SRCDIR)/mlx
 MLX			=	$(MLX_DIR)/libmlx.a
 MLX_FLAGS	=	-L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 

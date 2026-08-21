@@ -1,64 +1,78 @@
 #include "cube3d.h"
 
 /*
-    PARSING DELLE TEXTURE
-
-    Qua stiamo leggendo la riga di una texture. ad una riga puo' essere "NO ./textures/north.xmp9", la funzione parser_texture splita questa stringa
-    a una matrice {"NO", "./textures/north.xmp9"} questo in modo da poter separare il nome della texture con il path di questa. Controlliamo che il file esista
-    e si possa aprire per poi creare l'immagine e assegnarla al giusto attributo
+** ============================================================================
+** PARSING DELLE TEXTURE (NORD, SUD, EST, OVEST)
+** ============================================================================
+** Questo file si occupa di processare le righe di configurazione relative
+** ai percorsi delle texture dei muri.
+**
+** Flusso di esecuzione (es. input: "NO ./textures/north.xpm"):
+** 1. Pulizia e divisione: La riga viene ripulita dal newline ('\n') e
+**    separata tramite lo spazio -> matrix = {"NO", "./textures/north.xpm"}.
+** 2. Controllo formato: Si verifica che la riga contenga esattamente due
+**    elementi: l'Identificativo e il Percorso.
+** 3. Validazione file: La funzione `exist_texture` prova ad aprire il file
+**    nel percorso indicato in sola lettura, per garantire che esista.
+** 4. Routing e caricamento: `parser_texture_controller` individua l'ID
+**    ("NO", "SO", "EA", "WE"). Successivamente, `set_texture` controlla
+**    che la texture non sia già stata impostata (evitando duplicati) e
+**    utilizza la MiniLibX (`mlx_xpm_file_to_image`) per caricare il file
+**    XPM in memoria, salvandone il puntatore nella struttura principale.
+** ============================================================================
 */
 
-typedef struct s_context
+static void exist_texture(t_cube3d *cube3d, char **matrix)
 {
-    char **matrix;
-    t_cube3d *cube3d;
-} t_context;
+    int fd;
 
-static void free_parser_texture(t_context context)
-{
-    if (context.matrix)
-        free_matrix(context.matrix);
+    fd = open(matrix[1], O_RDONLY);
+    if (fd < 0)
+        return (free_matrix(matrix)), perror_and_exit(cube3d, "Texture file error: Cannot open or find the specified file");
+    close(fd);
 }
 
-static void set_texture(t_context context, void **texture)
+static void set_texture(t_cube3d *cube3d, char **matrix, void **t)
 {
     int width;
     int height;
+
     void *img_ptr;
 
-    if (*texture)
-        return (free_parser_texture(context), perror_and_exit(context.cube3d, "Duplicate texture configuration: Texture ID is already set", 1));
-    img_ptr = mlx_xpm_file_to_image(context.cube3d->mlx_ptr, context.matrix[1], &width, &height);
+    if (*t)
+        return (free_matrix(matrix), perror_and_exit(cube3d, "Duplicate texture configuration: Texture ID is already set"));
+    img_ptr = mlx_xpm_file_to_image(cube3d->mlx_ptr, matrix[1], &width, &height);
     if (!img_ptr)
-        return (free_parser_texture(context), perror_and_exit(context.cube3d, "Invalid XPM file: Could not load the image with MiniLibX", 1));
-    *texture = img_ptr;
+        return (free_matrix(matrix), perror_and_exit(cube3d, "Invalid XPM file: Could not load the image with MiniLibX"));
+    *t = img_ptr;
 }
 
-void parser_texture(t_cube3d *cube3d, char **tmp)
+static void parser_texture_controller(t_cube3d *cube3d, char **matrix)
 {
-    int fd;
-    t_context context;
+    if (ft_strncmp(matrix[0], "NO", 2) == 0)
+        set_texture(cube3d, matrix, &cube3d->textures.north);
+    else if (ft_strncmp(matrix[0], "SO", 2) == 0)
+        set_texture(cube3d, matrix, &cube3d->textures.south);
+    else if (ft_strncmp(matrix[0], "EA", 2) == 0)
+        set_texture(cube3d, matrix, &cube3d->textures.east);
+    else if (ft_strncmp(matrix[0], "WE", 2) == 0)
+        set_texture(cube3d, matrix, &cube3d->textures.west);
+    else
+        return (free_matrix(matrix), perror_and_exit(cube3d, "Invalid texture name: Expected 'NO' | 'SO' | 'EA' | 'WE'"));
+}
 
-    context.cube3d = cube3d;
-    context.matrix = ft_split(*tmp, ' ');
-    free(*tmp);
-    *tmp = NULL;
-    if (matrix_length(context.matrix) != 2)
-        return (free_parser_texture(context), perror_and_exit(cube3d, "Invalid texture format: Expected '<ID> <path_to_texture>'", 1));
+void parser_texture(t_cube3d *cube3d, char *line)
+{
+    char *tmp;
+    char **matrix;
 
-    fd = open(context.matrix[1], O_RDONLY);
-    if (fd < 0)
-        return (free_parser_texture(context), perror_and_exit(cube3d, "Texture file error: Cannot open or find the specified file", 1));
-    close(fd);
-
-    if (ft_strncmp(context.matrix[0], "NO", 2) == 0)
-        set_texture(context, &context.cube3d->textures.north);
-    else if (ft_strncmp(context.matrix[0], "SO", 2) == 0)
-        set_texture(context, &context.cube3d->textures.south);
-    else if (ft_strncmp(context.matrix[0], "EA", 2) == 0)
-        set_texture(context, &context.cube3d->textures.east);
-    else if (ft_strncmp(context.matrix[0], "WE", 2) == 0)
-        set_texture(context, &context.cube3d->textures.west);
-
-    free_parser_texture(context);
+    tmp = ft_strtrim(line, "\n");
+    matrix = ft_split(tmp, ' ');
+    free(tmp);
+    free(line);
+    if (matrix_length(matrix) != 2)
+        return (free_matrix(matrix), perror_and_exit(cube3d, "Invalid texture format: Expected '<ID> <path_to_texture>'"));
+    exist_texture(cube3d, matrix);
+    parser_texture_controller(cube3d, matrix);
+    free_matrix(matrix);
 }
