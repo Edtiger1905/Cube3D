@@ -43,6 +43,12 @@ static void free_helper(t_context *context)
         free_matrix(context->rgb_matrix);
 }
 
+static void duplicate_texture_error(t_context *context)
+{
+    free_helper(context);
+    perror_and_exit(context->cube3d, "[PARSER RGB] Duplicate RGB color");
+}
+
 static void set_rgb(t_context *context)
 {
     int R;
@@ -55,17 +61,19 @@ static void set_rgb(t_context *context)
     B = context->rgb[2];
     rgb_color = (R << 16) | (G << 8) | B;
 
-    if (context->cube3d->textures.floor != -1 || context->cube3d->textures.ceiling != -1)
+    if (ft_strncmp(context->matrix[0], "F", 1) == 0)
     {
-        free_helper(context);
-        perror_and_exit(context->cube3d, "[PARSER RGB] Duplicate RGB color");
+        if (context->cube3d->textures.floor != -1)
+            duplicate_texture_error(context);
+        context->cube3d->textures.floor = rgb_color;
     }
 
-    if (ft_strncmp(context->matrix[0], "F", 1) == 0)
-        context->cube3d->textures.floor = rgb_color;
-
     if (ft_strncmp(context->matrix[0], "C", 1) == 0)
+    {
+        if (context->cube3d->textures.ceiling != -1)
+            duplicate_texture_error(context);
         context->cube3d->textures.ceiling = rgb_color;
+    }
 }
 
 static void convert_rgb_values(t_context *context)
