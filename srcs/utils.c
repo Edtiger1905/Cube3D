@@ -28,15 +28,15 @@ void open_file_and_setconfig(t_cube3d *cube3d)
     char *src_map;
 
     if (cube3d->argc < 2)
-        return (perror_and_exit(cube3d, "Missing argument: Please provide a map file"));
+        return (perror_and_exit(cube3d, "[ARGUMENTS VALIDATOR UTILS] Please provide a map file"));
     if (cube3d->argc > 2)
-        return (perror_and_exit(cube3d, "Too many arguments: Only one map file is allowed"));
+        return (perror_and_exit(cube3d, "[ARGUMENTS VALIDATOR UTILS] Only one map file is allowed"));
     src_map = cube3d->argv[1];
     if (!is_cub_extension(src_map))
-        return (perror_and_exit(cube3d, "Invalid file extension: Map must end with '.cub'"));
+        return (perror_and_exit(cube3d, "[FILE VALIDATOR UTILS] Map must end with '.cub'"));
     fd = open(src_map, O_RDONLY);
     if (fd < 0)
-        return (perror_and_exit(cube3d, "File error: Cannot open the map file"));
+        return (perror_and_exit(cube3d, "[FILE VALIDATOR UTILS] Cannot open the map file"));
     cube3d->fd = fd;
     cube3d->src_map = src_map;
 }

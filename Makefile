@@ -5,6 +5,8 @@ OBJDIR		=	obj
 SRCS		=	free_memory.c \
 				init_cube3d.c \
 				main.c \
+				parser_map.c \
+				parser_rgb_utils.c \
 				parser_rgb.c \
 				parser_texture.c \
 				parser_textures.c \

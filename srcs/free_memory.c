@@ -9,13 +9,13 @@ static void flush_gnl(t_cube3d *cube3d)
         while ((line = get_next_line(cube3d->fd)))
             free(line);
         close(cube3d->fd);
+        cube3d->fd = -1;
     }
 }
 
 void free_cube3d(t_cube3d *cube3d)
 {
     flush_gnl(cube3d);
-
     if (cube3d->mlx_ptr)
     {
         if (cube3d->textures.north)
@@ -29,6 +29,8 @@ void free_cube3d(t_cube3d *cube3d)
         mlx_destroy_display(cube3d->mlx_ptr);
         free(cube3d->mlx_ptr);
     }
+    if (cube3d->map.matrix)
+        free_matrix(cube3d->map.matrix);
 }
 
 void free_matrix(char **matrix)

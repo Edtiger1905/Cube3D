@@ -26,21 +26,10 @@
 ** ============================================================================
 */
 
-static void init_empty_textures(t_cube3d *cube3d)
-{
-    cube3d->textures.north = NULL;
-    cube3d->textures.south = NULL;
-    cube3d->textures.east = NULL;
-    cube3d->textures.west = NULL;
-    cube3d->textures.floor = -1;
-    cube3d->textures.ceiling = -1;
-}
-
 void parser_textures(t_cube3d *cube3d)
 {
     char *line;
 
-    init_empty_textures(cube3d);
     open_file_and_setconfig(cube3d);
     while ((line = get_next_line(cube3d->fd)))
     {
@@ -61,4 +50,5 @@ void parser_textures(t_cube3d *cube3d)
         free(line);
     }
     close(cube3d->fd);
+    cube3d->fd = -1;
 }

@@ -10,6 +10,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+typedef struct s_map
+{
+    int lines;
+
+    char **matrix;
+} t_map;
+
 typedef struct s_textures
 {
     void *north;
@@ -32,6 +39,8 @@ typedef struct s_cube3d
     void *mlx_ptr;
 
     t_textures textures;
+
+    t_map map;
 } t_cube3d;
 
 // free_memory.c
@@ -40,6 +49,12 @@ void free_matrix(char **matrix);
 
 // init_cube3d.c
 void init_cube3d(t_cube3d *cube3d);
+
+// parser_map.c
+void parser_map(t_cube3d *cube3d);
+
+// parser_rgb_utils.c
+char **parser_rgb_initialize_matrix(t_cube3d *cube3d, char *line);
 
 // parser_rgb.c
 void parser_rgb(t_cube3d *cube3d, char *line);

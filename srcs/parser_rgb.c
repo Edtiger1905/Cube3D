@@ -43,20 +43,29 @@ static void free_helper(t_context *context)
         free_matrix(context->rgb_matrix);
 }
 
-static int is_valid_str_rgb(char *str_rgb)
+static void set_rgb(t_context *context)
 {
-    int i;
-    int len;
+    int R;
+    int G;
+    int B;
+    int rgb_color;
 
-    i = 0;
-    len = ft_strlen(str_rgb);
-    while (i < len)
+    R = context->rgb[0];
+    G = context->rgb[1];
+    B = context->rgb[2];
+    rgb_color = (R << 16) | (G << 8) | B;
+
+    if (context->cube3d->textures.floor != -1 || context->cube3d->textures.ceiling != -1)
     {
-        if (!(ft_isdigit(str_rgb[i]) || str_rgb[i] == ','))
-            return (0);
-        i++;
+        free_helper(context);
+        perror_and_exit(context->cube3d, "[PARSER RGB] Duplicate RGB color");
     }
-    return (1);
+
+    if (ft_strncmp(context->matrix[0], "F", 1) == 0)
+        context->cube3d->textures.floor = rgb_color;
+
+    if (ft_strncmp(context->matrix[0], "C", 1) == 0)
+        context->cube3d->textures.ceiling = rgb_color;
 }
 
 static void convert_rgb_values(t_context *context)
@@ -70,59 +79,28 @@ static void convert_rgb_values(t_context *context)
     {
         context->rgb[i] = ft_atoi(context->rgb_matrix[i]);
         if (context->rgb[i] < 0 || context->rgb[i] > 255)
-            return (free_helper(context), perror_and_exit(context->cube3d, "Invalid RGB range: Values must be between 0 and 255"));
+        {
+            free_helper(context);
+            perror_and_exit(context->cube3d, "[PARSER RGB] Values must be between 0 and 255");
+        }
         i++;
-    }
-}
-
-static void set_rgb(t_context *context)
-{
-    int R;
-    int G;
-    int B;
-    int rgb_color;
-
-    R = context->rgb[0];
-    G = context->rgb[1];
-    B = context->rgb[2];
-    rgb_color = (R << 16) | (G << 8) | B;
-    if (ft_strncmp(context->matrix[0], "F", 1) == 0)
-    {
-        if (context->cube3d->textures.floor != -1)
-            return (free_helper(context), perror_and_exit(context->cube3d, "Duplicate RGB configuration: Floor color is already set"));
-        context->cube3d->textures.floor = rgb_color;
-    }
-    if (ft_strncmp(context->matrix[0], "C", 1) == 0)
-    {
-        if (context->cube3d->textures.ceiling != -1)
-            return (free_helper(context), perror_and_exit(context->cube3d, "Duplicate RGB configuration: Floor color is already set"));
-        context->cube3d->textures.ceiling = rgb_color;
     }
 }
 
 void parser_rgb(t_cube3d *cube3d, char *line)
 {
-    char *tmp;
     t_context context;
 
-    context.rgb = NULL;
-    context.matrix = NULL;
-    context.rgb_matrix = NULL;
     context.cube3d = cube3d;
-    tmp = ft_strtrim(line, "\n");
-    context.matrix = ft_split(tmp, ' ');
-    free(tmp);
-    free(line);
-    if (matrix_length(context.matrix) != 2)
-        return (free_helper(&context), perror_and_exit(cube3d, "Invalid RGB format: Expected '<F/C> <R,G,B>'"));
-    if (!is_valid_str_rgb(context.matrix[1]))
-        return (free_helper(&context), perror_and_exit(cube3d, "Invalid RGB characters: Only digits and commas are allowed'"));
     context.rgb = malloc(sizeof(int) * 3);
+    context.matrix = parser_rgb_initialize_matrix(cube3d, line);
     if (!context.rgb)
-        return (free_helper(&context), perror_and_exit(cube3d, "Malloc error: Failed to initialize RGB"));
+        return (free_helper(&context), perror_and_exit(cube3d, "[PARSER RGB] Failed to initialize RGB"));
     context.rgb_matrix = ft_split(context.matrix[1], ',');
+    if (!context.rgb_matrix)
+        return (free_helper(&context), perror_and_exit(cube3d, "[PARSER RGB] Failed to initialize RGB matrix"));
     if (matrix_length(context.rgb_matrix) != 3)
-        return (free_helper(&context), perror_and_exit(cube3d, "Invalid RGB format: Expected exactly 3 values separated by commas"));
+        return (free_helper(&context), perror_and_exit(cube3d, "[PARSER RGB] RGB expected exactly 3 values separated by commas"));
     convert_rgb_values(&context);
     set_rgb(&context);
     free_helper(&context);
