@@ -13,10 +13,10 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-static char *read_buffer(int fd, char *buffer)
+static char	*read_buffer(int fd, char *buffer)
 {
-	char *s1;
-	ssize_t bytes_read;
+	char	*s1;
+	ssize_t	bytes_read;
 
 	s1 = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!s1)
@@ -32,8 +32,7 @@ static char *read_buffer(int fd, char *buffer)
 			return (NULL);
 		}
 		if (bytes_read == 0)
-			break;
-
+			break ;
 		s1[bytes_read] = '\0';
 		buffer = gnl_ft_strjoin(buffer, s1);
 	}
@@ -52,7 +51,8 @@ static char *read_buffer(int fd, char *buffer)
  * Riga 14: Inizializza bytes_read a 1 per entrare nel ciclo
  * Riga 15: Il ciclo continua finché non trova '\n' in buffer e bytes_read > 0
  * Riga 17: Legge BUFFER_SIZE byte dal file descriptor
- * Righe 18-22: Se read() ritorna minore di 0 (errore), libera memoria e ritorna NULL
+ * Righe 18-22: Se read() ritorna minore di 0 (errore),
+	libera memoria e ritorna NULL
  * Riga 23: Aggiunge null terminator dopo ogni lettura
  * Righe 24-25: Se buffer è NULL, lo inizializza con stringa vuota
  * Riga 26: Salva puntatore attuale di buffer
@@ -61,10 +61,10 @@ static char *read_buffer(int fd, char *buffer)
  * Righe 30-31: Libera buffer temporaneo s1 e ritorna la stringa accumulata
  */
 
-static char *get_line(char *buffer)
+static char	*get_line(char *buffer)
 {
-	char *line;
-	int len;
+	char	*line;
+	int		len;
 
 	len = 0;
 	if (!buffer[len])
@@ -103,11 +103,11 @@ static char *get_line(char *buffer)
  * Riga 56: Ritorna la riga estratta
  */
 
-static char *get_new_buffer(char *buffer)
+static char	*get_new_buffer(char *buffer)
 {
-	char *new_buff;
-	int i;
-	int j;
+	char	*new_buff;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -146,10 +146,10 @@ static char *get_new_buffer(char *buffer)
  * Riga 83: Ritorna il nuovo buffer
  */
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *buffer;
-	char *line;
+	static char	*buffer;
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
