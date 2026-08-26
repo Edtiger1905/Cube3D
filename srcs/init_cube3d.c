@@ -1,19 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_cube3d.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: evera <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/26 13:57:56 by evera             #+#    #+#             */
+/*   Updated: 2026/08/26 13:57:58 by evera            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cube3d.h"
 
-void init_cube3d(t_cube3d *cube3d)
+void	init_cube3d(t_cube3d *cube3d)
 {
-    cube3d->mlx_ptr = mlx_init();
-    if (!cube3d->mlx_ptr)
-        return perror_and_exit(cube3d, "[INIT CUBE3D] Failed to initialize MLX");
-    cube3d->fd = -1;
-    cube3d->textures.north = NULL;
-    cube3d->textures.south = NULL;
-    cube3d->textures.east = NULL;
-    cube3d->textures.west = NULL;
-    cube3d->textures.floor = -1;
-    cube3d->textures.ceiling = -1;
-    cube3d->map.lines = 0;
-    cube3d->map.matrix = NULL;
-    parser_textures(cube3d);
-    parser_map(cube3d);
+	cube3d->fd = -1;
+	cube3d->mlx_ptr = mlx_init();
+	if (!cube3d->mlx_ptr)
+		free_and_exit(cube3d, "Failed to init mlx");
+	init_textures(cube3d);
+	init_map(cube3d);
 }

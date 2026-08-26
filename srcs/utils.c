@@ -1,72 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: evera <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/26 14:02:29 by evera             #+#    #+#             */
+/*   Updated: 2026/08/26 14:02:30 by evera            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cube3d.h"
 
-void perror_and_exit(t_cube3d *cube3d, char *msg_error)
+void	free_and_exit(t_cube3d *cube3d, char *msg)
 {
-    ft_putstr_fd("Error:\n", 1);
-    ft_putstr_fd(msg_error, 1);
-    ft_putchar_fd('\n', 1);
-    if (cube3d)
-        free_cube3d(cube3d);
-    exit(1);
+	if (cube3d)
+		free_cube3d(cube3d);
+	ft_putstr_fd("Error:\n", 1);
+	ft_putstr_fd(msg, 1);
+	ft_putchar_fd('\n', 1);
+	exit(1);
 }
 
-int is_cub_extension(char *src_map)
+int	is_map(char *line)
 {
-    char *s;
+	int	i;
+	int	has_map_char;
 
-    s = ft_strrchr(src_map, '.');
-
-    if (!s || ft_strlen(s) > 4 || ft_strncmp(s, ".cub", 4) != 0)
-        return (0);
-
-    return (1);
+	if (!line || !line[0])
+		return (0);
+	i = 0;
+	has_map_char = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '0' && line[i] != '1' && line[i] != 'N'
+			&& line[i] != 'S' && line[i] != 'E' && line[i] != 'W'
+			&& line[i] != '\n')
+			return (0);
+		if (line[i] == '0' || line[i] == '1' || line[i] == 'N' || line[i] == 'S'
+			|| line[i] == 'E' || line[i] == 'W')
+			has_map_char = 1;
+		i++;
+	}
+	return (has_map_char);
 }
 
-void open_file_and_setconfig(t_cube3d *cube3d)
+int	matrix_length(char **matrix)
 {
-    int fd;
-    char *src_map;
+	int	i;
 
-    if (cube3d->argc < 2)
-        return (perror_and_exit(cube3d, "[ARGUMENTS VALIDATOR UTILS] Please provide a map file"));
-    if (cube3d->argc > 2)
-        return (perror_and_exit(cube3d, "[ARGUMENTS VALIDATOR UTILS] Only one map file is allowed"));
-    src_map = cube3d->argv[1];
-    if (!is_cub_extension(src_map))
-        return (perror_and_exit(cube3d, "[FILE VALIDATOR UTILS] Map must end with '.cub'"));
-    fd = open(src_map, O_RDONLY);
-    if (fd < 0)
-        return (perror_and_exit(cube3d, "[FILE VALIDATOR UTILS] Cannot open the map file"));
-    cube3d->fd = fd;
-    cube3d->src_map = src_map;
+	i = 0;
+	if (!matrix || !matrix[0])
+		return (i);
+	while (matrix[i])
+		i++;
+	return (i);
 }
 
-int matrix_length(char **matrix)
+int	is_valid_rgb_number(int *rgb, int len)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!matrix)
-        return (i);
-    while (matrix[i])
-        i++;
-    return (i);
-}
-
-int is_map(char *line)
-{
-    int i;
-
-    if (!line || line[0] == '\0')
-        return (0);
-    i = 0;
-    while (line[i])
-    {
-        if (line[i] != ' ' && line[i] != '0' && line[i] != '1' &&
-            line[i] != 'N' && line[i] != 'S' && line[i] != 'E' &&
-            line[i] != 'W')
-            return (0);
-        i++;
-    }
-    return (1);
+	i = 0;
+	while (i < len)
+	{
+		if (rgb[i] < 0 || rgb[i] > 255)
+			return (0);
+		i++;
+	}
+	return (1);
 }

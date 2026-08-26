@@ -4,14 +4,13 @@ SRCDIR		=	srcs
 OBJDIR		=	obj
 SRCS		=	free_memory.c \
 				init_cube3d.c \
+				init_map.c \
+				init_textures.c \
 				main.c \
-				parser_map.c \
-				parser_rgb_utils.c \
+				open_file.c \
 				parser_rgb.c \
 				parser_texture.c \
-				parser_textures.c \
-				utils.c
-
+				utils.c \
                 
 OBJS		=	${SRCS:%.c=$(OBJDIR)/%.o}
 
