@@ -12,6 +12,15 @@
 
 #include "cube3d.h"
 
+static int	are_textures_completed(t_textures textures)
+{
+	if (!textures.north || !textures.south ||
+	!textures.east || !textures.west ||
+	textures.floor == -1 || textures.ceiling == -1)
+		return (0);
+	return (1);
+}
+
 static int	is_cardinal_point(char *line)
 {
 	if (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0
@@ -31,18 +40,15 @@ void	init_textures(t_cube3d *cube3d)
 {
 	char	*line;
 
-	cube3d->textures.north = NULL;
-	cube3d->textures.south = NULL;
-	cube3d->textures.east = NULL;
-	cube3d->textures.west = NULL;
-	cube3d->textures.floor = -1;
-	cube3d->textures.ceiling = -1;
 	open_file(cube3d);
 	line = get_next_line(cube3d->fd);
 	while (line)
 	{
 		if (is_map(line))
-			return (free(line));
+		{
+			free(line);
+			break ;
+		}
 		else if (is_cardinal_point(line))
 			parser_texture(cube3d, line);
 		else if (is_rgb_texture(line))
@@ -51,4 +57,6 @@ void	init_textures(t_cube3d *cube3d)
 			free(line);
 		line = get_next_line(cube3d->fd);
 	}
+	if (!are_textures_completed(cube3d->textures))
+		free_and_exit(cube3d, "Missing textures");
 }

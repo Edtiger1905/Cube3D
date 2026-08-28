@@ -12,9 +12,23 @@
 
 #include "cube3d.h"
 
-void	init_cube3d(t_cube3d *cube3d)
+static void	init_empty_cube3d(t_cube3d *cube3d)
 {
 	cube3d->fd = -1;
+	cube3d->mlx_ptr = NULL;
+	cube3d->textures.north = NULL;
+	cube3d->textures.south = NULL;
+	cube3d->textures.east = NULL;
+	cube3d->textures.west = NULL;
+	cube3d->textures.floor = -1;
+	cube3d->textures.ceiling = -1;
+	cube3d->map.lines = 0;
+	cube3d->map.matrix = NULL;
+}
+
+void	init_cube3d(t_cube3d *cube3d)
+{
+	init_empty_cube3d(cube3d);
 	cube3d->mlx_ptr = mlx_init();
 	if (!cube3d->mlx_ptr)
 		free_and_exit(cube3d, "Failed to init mlx");

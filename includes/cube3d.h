@@ -70,5 +70,6 @@ void			free_and_exit(t_cube3d *cube3d, char *msg);
 int				is_map(char *line);
 int				matrix_length(char **matrix);
 int				is_valid_rgb_number(int *rgb, int len);
+int				is_valid_str_rgb(char *str_rgb);
 
 #endif

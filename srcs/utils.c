@@ -70,3 +70,19 @@ int	is_valid_rgb_number(int *rgb, int len)
 	}
 	return (1);
 }
+
+int	is_valid_str_rgb(char *str_rgb)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(str_rgb);
+	while (i < len)
+	{
+		if (!(ft_isdigit(str_rgb[i]) || str_rgb[i] == ','))
+			return (0);
+		i++;
+	}
+	return (1);
+}

@@ -81,8 +81,6 @@ static void	print_map(t_cube3d *cube3d)
 
 void	init_map(t_cube3d *cube3d)
 {
-	(void)cube3d;
-	cube3d->map.lines = 0;
 	calculate_lines(cube3d);
 	cube3d->map.matrix = ft_calloc(cube3d->map.lines + 1, sizeof(char *));
 	if (!cube3d->map.matrix)
