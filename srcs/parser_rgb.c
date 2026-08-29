@@ -36,7 +36,8 @@ static void	parser_matrix(t_cube3d *cube3d, char **matrix)
 	}
 }
 
-static void	parser_matrix_rgb(t_cube3d *cube3d, char **matrix, char **matrix_rgb)
+static void	parser_matrix_rgb(t_cube3d *cube3d, char **matrix,
+		char **matrix_rgb)
 {
 	if (matrix_length(matrix_rgb) != 3)
 	{
@@ -44,7 +45,6 @@ static void	parser_matrix_rgb(t_cube3d *cube3d, char **matrix, char **matrix_rgb
 		free_matrix(matrix_rgb);
 		free_and_exit(cube3d, "Expected: 'ID' <R,G,B>");
 	}
-
 }
 
 static void	convert_rgb(char **matrix_rgb, int *rgb)

@@ -14,9 +14,8 @@
 
 static int	are_textures_completed(t_textures textures)
 {
-	if (!textures.north || !textures.south ||
-	!textures.east || !textures.west ||
-	textures.floor == -1 || textures.ceiling == -1)
+	if (!textures.north || !textures.south || !textures.east || !textures.west
+		|| textures.floor == -1 || textures.ceiling == -1)
 		return (0);
 	return (1);
 }
