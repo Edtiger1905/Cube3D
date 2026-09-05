@@ -9,11 +9,18 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_player
+{
+	int			x;
+	int			y;
+}				t_player;
+
 typedef struct s_map
 {
 	int			lines;
 
 	char		**matrix;
+	t_player	player;
 }				t_map;
 
 typedef struct s_textures
