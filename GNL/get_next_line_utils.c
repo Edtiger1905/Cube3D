@@ -6,7 +6,7 @@
 /*   By: epandele <epandele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:21:28 by epandele          #+#    #+#             */
-/*   Updated: 2025/08/27 15:32:51 by epandele         ###   ########.fr       */
+/*   Updated: 2026/09/11 18:00:15 by epandele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_strlen(const char *s)
  * Riga 11: Ritorna il numero totale di caratteri (escluso '\0')
  */
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char	*str;
 	size_t	i;
@@ -54,7 +54,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		i++;
 	}
 	str[j] = 0;
-	free(s1);
+	free((char *)s1);
 	return (str);
 }
 /*
@@ -73,7 +73,7 @@ char	*ft_strjoin(char *s1, char *s2)
  * Riga 41: Ritorna la stringa concatenata
  */
 
-char	*ft_strchr(const char *s, char c)
+char	*ft_strchr(const char *s, int c)
 {
 	int	i;
 

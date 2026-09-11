@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epandele <epandele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/27 14:26:01 by epandele          #+#    #+#             */
+/*   Created: 2026/09/11 12:00:00 by epandele          #+#    #+#             */
 /*   Updated: 2026/09/11 18:00:15 by epandele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "cube3d.h"
 
-# include <fcntl.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
-# endif
-
-int		ft_strlen(const char *s);
-char		*ft_strjoin(const char *s1, const char *s2);
-char		*ft_strchr(const char *s, int c);
-char		*ft_strdup(const char *src);
-char		*get_next_line(int fd);
-
-#endif
+void	open_file(t_cube3d *cube3d)
+{
+	if (cube3d->argc < 2)
+		free_and_exit(cube3d, "Missing map file");
+	if (cube3d->fd >= 0)
+		close(cube3d->fd);
+	cube3d->fd = open(cube3d->argv[1], O_RDONLY);
+	if (cube3d->fd < 0)
+		free_and_exit(cube3d, "Failed to open map file");
+}

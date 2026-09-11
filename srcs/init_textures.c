@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   init_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epandele <epandele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/27 14:26:01 by epandele          #+#    #+#             */
+/*   Created: 2026/09/11 12:00:00 by epandele          #+#    #+#             */
 /*   Updated: 2026/09/11 18:00:15 by epandele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "cube3d.h"
 
-# include <fcntl.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
-# endif
-
-int		ft_strlen(const char *s);
-char		*ft_strjoin(const char *s1, const char *s2);
-char		*ft_strchr(const char *s, int c);
-char		*ft_strdup(const char *src);
-char		*get_next_line(int fd);
-
-#endif
+void	init_textures(t_cube3d *cube3d)
+{
+	cube3d->textures.north = NULL;
+	cube3d->textures.south = NULL;
+	cube3d->textures.east = NULL;
+	cube3d->textures.west = NULL;
+	cube3d->textures.north_d.w = 0;
+	cube3d->textures.north_d.h = 0;
+	cube3d->textures.south_d.w = 0;
+	cube3d->textures.south_d.h = 0;
+	cube3d->textures.east_d.w = 0;
+	cube3d->textures.east_d.h = 0;
+	cube3d->textures.west_d.w = 0;
+	cube3d->textures.west_d.h = 0;
+	cube3d->textures.floor = -1;
+	cube3d->textures.ceiling = -1;
+}

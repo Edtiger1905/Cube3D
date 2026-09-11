@@ -1,33 +1,50 @@
-NAME        = cub3d
+NAME		=	cub3d
 
-SRCDIR      = srcs
-OBJDIR      = obj
-SRCS        = main.c utils.c validations.c
-                
-OBJS        = ${SRCS:%.c=$(OBJDIR)/%.o}
+SRCDIR		=	srcs
+OBJDIR		=	obj
+SRCS		=	check_map.c \
+				free_memory.c \
+				init_cube3d.c \
+				init_render.c \
+				init_textures.c \
+				main.c \
+				open_file.c \
+				parser_map.c \
+				parser_rgb.c \
+				parser_texture.c \
+				raycasting.c \
+				raycasting_draw.c \
+				raycasting_utils.c \
+				hooks.c \
+				utils.c \
 
-LIBFT_DIR   = libft
-LIBFT       = $(LIBFT_DIR)/libft.a
+OBJS		=	${SRCS:%.c=$(OBJDIR)/%.o}
 
-GNL_DIR     = GNL
-GNL         = $(GNL_DIR)/gnl.a
+LIBFT_DIR	=	libft
+LIBFT		=	$(LIBFT_DIR)/libft.a
 
-CC          = cc
-RM          = rm -f
+GNL_DIR		=	GNL
+GNL			=	$(GNL_DIR)/gnl.a
 
-CFLAGS      = -Wall -Wextra -Werror
-# Aggiunto -I$(GNL_DIR) per permettere a cub3d di trovare get_next_line.h
-INCLUDES    = -Iincludes -I$(LIBFT_DIR)/includes -I$(GNL_DIR)
+MLX_DIR		=	minilibx-linux
+MLX			=	$(MLX_DIR)/libmlx.a
+MLX_FLAGS	=	-L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
+
+CC			=	cc
+RM			=	rm -f
+
+CFLAGS		=	-Wall -Wextra -Werror
+INCLUDES	=	-Iincludes -I$(LIBFT_DIR)/includes -I$(GNL_DIR) -I$(MLX_DIR)
 
 # Colori
-GREEN   = \033[0;32m
-YELLOW  = \033[0;33m
-RED     = \033[0;31m
-CYAN    = \033[0;36m
-BOLD    = \033[1m
-RESET   = \033[0m
+GREEN		=	\033[0;32m
+YELLOW		=	\033[0;33m
+RED			=	\033[0;31m
+CYAN		=	\033[0;36m
+BOLD		=	\033[1m
+RESET		=	\033[0m
 
-all: libft gnl $(NAME)
+all: libft gnl mlx $(NAME)
 
 libft:
 	@printf "$(CYAN)$(BOLD)Compilando libft...$(RESET)\n"
@@ -39,6 +56,11 @@ gnl:
 	@$(MAKE) -C $(GNL_DIR) --no-print-directory
 	@printf "$(GREEN)✔ gnl pronto!$(RESET)\n"
 
+mlx:
+	@printf "$(CYAN)$(BOLD)Compilando mlx...$(RESET)\n"
+	@$(MAKE) -C $(MLX_DIR) --no-print-directory
+	@printf "$(GREEN)✔ mlx pronta!$(RESET)\n"
+
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	@printf "$(YELLOW)Compilando: $<$(RESET)\n"
@@ -46,7 +68,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 $(NAME): ${OBJS}
 	@printf "$(CYAN)$(BOLD)Creazione dell'eseguibile $(NAME)...$(RESET)\n"
-	@${CC} ${CFLAGS} ${OBJS} ${LIBFT} ${GNL} -o ${NAME}
+	@${CC} ${CFLAGS} ${OBJS} ${GNL} ${LIBFT} ${MLX_FLAGS} -o ${NAME}
 	@printf "$(GREEN)$(BOLD)✔ $(NAME) compilato con successo!$(RESET)\n"
 
 clean:
@@ -54,15 +76,16 @@ clean:
 	@${RM} -r $(OBJDIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
 	@$(MAKE) -C $(GNL_DIR) clean --no-print-directory
+	@$(MAKE) -C $(MLX_DIR) clean --no-print-directory # NUOVO
 	@printf "$(GREEN)✔ Oggetti cancellati!$(RESET)\n"
 
 fclean: clean
 	@printf "$(RED)Cancellando $(NAME)...$(RESET)\n"
 	@${RM} ${NAME}
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
-	@$(MAKE) -C $(GNL_DIR) fclean --no-print-directory
+	@$(MAKE) -C $(GNL_DIR) fclean --no-print-directory	
 	@printf "$(GREEN)✔ Tutto pulito!$(RESET)\n"
 
 re: fclean all
 
-.PHONY: all clean fclean re libft gnl
+.PHONY: all clean fclean re libft gnl mlx
