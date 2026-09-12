@@ -2,6 +2,7 @@ NAME		=	cub3d
 
 SRCDIR		=	srcs
 OBJDIR		=	obj
+<<<<<<< HEAD
 SRCS		=	check_map.c \
 				free_memory.c \
 				init_cube3d.c \
@@ -30,6 +31,30 @@ MLX_DIR		=	minilibx-linux
 MLX			=	$(MLX_DIR)/libmlx.a
 MLX_FLAGS	=	-L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
+=======
+SRCS		=	free_memory.c \
+				init_cube3d.c \
+				init_map.c \
+				init_textures.c \
+				main.c \
+				open_file.c \
+				parser_rgb.c \
+				parser_texture.c \
+				utils.c \
+                
+OBJS		=	${SRCS:%.c=$(OBJDIR)/%.o}
+
+LIBFT_DIR	=	$(SRCDIR)/libft
+LIBFT		=	$(LIBFT_DIR)/libft.a
+
+GNL_DIR		=	$(SRCDIR)/GNL
+GNL			=	$(GNL_DIR)/gnl.a
+
+MLX_DIR		=	$(SRCDIR)/mlx
+MLX			=	$(MLX_DIR)/libmlx.a
+MLX_FLAGS	=	-L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
+
+>>>>>>> elvis
 CC			=	cc
 RM			=	rm -f
 
@@ -68,7 +93,11 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 $(NAME): ${OBJS}
 	@printf "$(CYAN)$(BOLD)Creazione dell'eseguibile $(NAME)...$(RESET)\n"
+<<<<<<< HEAD
 	@${CC} ${CFLAGS} ${OBJS} ${GNL} ${LIBFT} ${MLX_FLAGS} -o ${NAME}
+=======
+	@${CC} ${CFLAGS} ${OBJS} ${LIBFT} ${GNL} ${MLX_FLAGS} -o ${NAME}
+>>>>>>> elvis
 	@printf "$(GREEN)$(BOLD)✔ $(NAME) compilato con successo!$(RESET)\n"
 
 clean:
@@ -88,4 +117,8 @@ fclean: clean
 
 re: fclean all
 
+<<<<<<< HEAD
 .PHONY: all clean fclean re libft gnl mlx
+=======
+.PHONY: all clean fclean re libft gnl mlx
+>>>>>>> elvis

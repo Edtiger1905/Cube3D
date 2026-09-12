@@ -6,11 +6,11 @@
 /*   By: epandele <epandele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 12:00:00 by epandele          #+#    #+#             */
-/*   Updated: 2026/09/11 17:30:22 by epandele         ###   ########.fr       */
+/*   Updated: 2026/09/11 12:00:00 by epandele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cube3d.h"
+#include "cube3d.h"
 
 static int	cell_kind(t_cube3d *cube3d, int x, int y)
 {

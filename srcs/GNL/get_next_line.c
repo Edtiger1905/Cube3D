@@ -12,30 +12,34 @@
 
 #include "get_next_line.h"
 #include <stdio.h>
+
 static char	*read_buffer(int fd, char *buffer)
 {
-	char	*s1; 
+	char	*s1;
 	ssize_t	bytes_read;
 
 	s1 = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!s1)
 		return (NULL);
 	bytes_read = 1;
-	while (bytes_read > 0 && !ft_strchr(buffer, '\n'))
+	while (bytes_read > 0 && !gnl_ft_strchr(buffer, '\n'))
 	{
 		bytes_read = read(fd, s1, BUFFER_SIZE);
-		if (bytes_read <= 0)
+		if (bytes_read == -1)
 		{
 			free(s1);
-            free(buffer);
+			free(buffer);
 			return (NULL);
 		}
+		if (bytes_read == 0)
+			break ;
 		s1[bytes_read] = '\0';
-        buffer = ft_strjoin(buffer, s1);
+		buffer = gnl_ft_strjoin(buffer, s1);
 	}
 	free(s1);
 	return (buffer);
 }
+
 /*
  * read_buffer: legge dal file descriptor fino a trovare '\n' o EOF
  * Righe 5-7: Dichiarazione variabili
@@ -47,7 +51,8 @@ static char	*read_buffer(int fd, char *buffer)
  * Riga 14: Inizializza bytes_read a 1 per entrare nel ciclo
  * Riga 15: Il ciclo continua finché non trova '\n' in buffer e bytes_read > 0
  * Riga 17: Legge BUFFER_SIZE byte dal file descriptor
- * Righe 18-22: Se read() ritorna minore di 0 (errore), libera memoria e ritorna NULL
+ * Righe 18-22: Se read() ritorna minore di 0 (errore),
+	libera memoria e ritorna NULL
  * Riga 23: Aggiunge null terminator dopo ogni lettura
  * Righe 24-25: Se buffer è NULL, lo inizializza con stringa vuota
  * Riga 26: Salva puntatore attuale di buffer
@@ -113,7 +118,7 @@ static char	*get_new_buffer(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	new_buff = (char *)malloc(sizeof(char) * (ft_strlen(&buffer[i++]) + 1));
+	new_buff = (char *)malloc(sizeof(char) * (gnl_ft_strlen(&buffer[i++]) + 1));
 	while (buffer[i])
 	{
 		new_buff[j] = buffer[i];

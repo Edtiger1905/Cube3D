@@ -6,7 +6,7 @@
 /*   By: epandele <epandele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 12:00:00 by epandele          #+#    #+#             */
-/*   Updated: 2026/09/11 17:39:13 by epandele         ###   ########.fr       */
+/*   Updated: 2026/09/11 12:00:00 by epandele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "get_next_line.h"
 # include "libft.h"
-# include <mlx.h>
+# include "mlx.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>

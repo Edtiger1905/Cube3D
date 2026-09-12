@@ -6,19 +6,23 @@
 /*   By: epandele <epandele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:21:28 by epandele          #+#    #+#             */
+<<<<<<< HEAD:GNL/get_next_line_utils.c
 /*   Updated: 2026/09/11 18:00:15 by epandele         ###   ########.fr       */
+=======
+/*   Updated: 2026/08/26 13:24:19 by evera            ###   ########.fr       */
+>>>>>>> elvis:srcs/GNL/get_next_line_utils.c
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(const char *s)
+int	gnl_ft_strlen(const char *s)
 {
 	int	i;
 
 	i = 0;
 	if (!s)
-		return(0);
+		return (0);
 	while (s[i] != '\0')
 		i++;
 	return (i);
@@ -31,13 +35,17 @@ int	ft_strlen(const char *s)
  * Riga 11: Ritorna il numero totale di caratteri (escluso '\0')
  */
 
+<<<<<<< HEAD:GNL/get_next_line_utils.c
 char	*ft_strjoin(const char *s1, const char *s2)
+=======
+char	*gnl_ft_strjoin(char *s1, char *s2)
+>>>>>>> elvis:srcs/GNL/get_next_line_utils.c
 {
 	char	*str;
 	size_t	i;
 	size_t	j;
 
-	str = (char *)malloc(sizeof(*s1) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	str = malloc(sizeof(*s1) * (gnl_ft_strlen(s1) + gnl_ft_strlen(s2) + 1));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -73,13 +81,17 @@ char	*ft_strjoin(const char *s1, const char *s2)
  * Riga 41: Ritorna la stringa concatenata
  */
 
+<<<<<<< HEAD:GNL/get_next_line_utils.c
 char	*ft_strchr(const char *s, int c)
+=======
+char	*gnl_ft_strchr(const char *s, char c)
+>>>>>>> elvis:srcs/GNL/get_next_line_utils.c
 {
 	int	i;
 
 	i = 0;
-	if(!s)
-		return(NULL);
+	if (!s)
+		return (NULL);
 	while (s[i] != '\0')
 	{
 		if (s[i] == c)
@@ -100,14 +112,14 @@ char	*ft_strchr(const char *s, int c)
  * Riga 58: Se non trova il carattere, ritorna NULL
  */
 
-char	*ft_strdup(const char *src)
+char	*gnl_ft_strdup(const char *src)
 {
 	char	*dup;
 	size_t	i;
 
 	if (!src)
 		return (NULL);
-	dup = (char *)malloc(sizeof(char) * (ft_strlen(src) + 1));
+	dup = (char *)malloc(sizeof(char) * (gnl_ft_strlen(src) + 1));
 	if (!dup)
 		return (NULL);
 	i = 0;
