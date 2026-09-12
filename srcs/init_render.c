@@ -83,6 +83,9 @@ void	init_render(t_cube3d *cube3d)
 	set_cam_from_char(cube3d, orientation);
 	init_window(cube3d);
 	mlx_hook(cube3d->win_ptr, 17, 0, handle_close, cube3d);
-	mlx_key_hook(cube3d->win_ptr, handle_keypress, cube3d);
+	mlx_hook(cube3d->win_ptr, EVENT_KEYPRESS, MASK_KEYPRESS,
+		handle_keydown, cube3d);
+	mlx_hook(cube3d->win_ptr, EVENT_KEYRELEASE, MASK_KEYRELEASE,
+		handle_keyup, cube3d);
 	mlx_loop_hook(cube3d->mlx_ptr, render_frame, cube3d);
 }

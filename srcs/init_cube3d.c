@@ -26,6 +26,7 @@ static void	init_empty_cube3d(t_cube3d *cube3d)
 	cube3d->textures.ceiling = -1;
 	cube3d->map.lines = 0;
 	cube3d->map.matrix = NULL;
+	ft_bzero(&cube3d->keys, sizeof(t_keys));
 }
 
 void	init_cube3d(t_cube3d *cube3d)

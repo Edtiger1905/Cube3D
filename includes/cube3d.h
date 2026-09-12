@@ -6,7 +6,7 @@
 /*   By: epandele <epandele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 12:00:00 by epandele          #+#    #+#             */
-/*   Updated: 2026/09/11 12:00:00 by epandele         ###   ########.fr       */
+/*   Updated: 2026/09/12 15:25:01 by epandele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,16 @@ typedef struct s_stack
 	int			top;
 }				t_stack;
 
+typedef struct s_keys
+{
+	int			w;
+	int			a;
+	int			s;
+	int			d;
+	int			left;
+	int			right;
+}				t_keys;
+
 typedef struct s_cube3d
 {
 	int			argc;
@@ -126,14 +136,15 @@ typedef struct s_cube3d
 	void		*win_ptr;
 	t_img		screen;
 	t_cam		cam;
+	t_keys		keys;
 
 	t_textures	textures;
 
 	t_map		map;
 }				t_cube3d;
 
-# define WIN_WIDTH 1024
-# define WIN_HEIGHT 768
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 # define KEY_ESC 65307
 # define KEY_W 119
 # define KEY_A 97
@@ -141,6 +152,10 @@ typedef struct s_cube3d
 # define KEY_D 100
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
+# define EVENT_KEYPRESS 2
+# define EVENT_KEYRELEASE 3
+# define MASK_KEYPRESS 1
+# define MASK_KEYRELEASE 2
 
 /* free_memory.c */
 void			flush_gnl(t_cube3d *cube3d);
@@ -191,8 +206,12 @@ int				get_tex_color(t_img *tex, int tex_x, int tex_y);
 void			draw_floor_ceiling(t_cube3d *cube3d, int x, int start,
 					int end);
 
+/* movement.c */
+void			update_movement(t_cube3d *cube3d);
+
 /* hooks.c */
-int				handle_keypress(int keycode, void *param);
+int				handle_keydown(int keycode, void *param);
+int				handle_keyup(int keycode, void *param);
 int				handle_close(void *param);
 
 #endif

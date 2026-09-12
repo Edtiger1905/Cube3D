@@ -3,40 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: epandele <epandele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 12:00:00 by epandele          #+#    #+#             */
-/*   Updated: 2026/09/11 18:00:15 by epandele         ###   ########.fr       */
-=======
-/*   By: evera <marvin@42.fr>                       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 14:15:06 by evera             #+#    #+#             */
-/*   Updated: 2026/08/26 14:15:09 by evera            ###   ########.fr       */
->>>>>>> elvis
+/*   Updated: 2026/09/12 12:00:00 by epandele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-<<<<<<< HEAD
-void	init_textures(t_cube3d *cube3d)
-{
-	cube3d->textures.north = NULL;
-	cube3d->textures.south = NULL;
-	cube3d->textures.east = NULL;
-	cube3d->textures.west = NULL;
-	cube3d->textures.north_d.w = 0;
-	cube3d->textures.north_d.h = 0;
-	cube3d->textures.south_d.w = 0;
-	cube3d->textures.south_d.h = 0;
-	cube3d->textures.east_d.w = 0;
-	cube3d->textures.east_d.h = 0;
-	cube3d->textures.west_d.w = 0;
-	cube3d->textures.west_d.h = 0;
-	cube3d->textures.floor = -1;
-	cube3d->textures.ceiling = -1;
-=======
 static int	are_textures_completed(t_textures textures)
 {
 	if (!textures.north || !textures.south || !textures.east || !textures.west
@@ -83,5 +58,4 @@ void	init_textures(t_cube3d *cube3d)
 	}
 	if (!are_textures_completed(cube3d->textures))
 		free_and_exit(cube3d, "Missing textures");
->>>>>>> elvis
 }

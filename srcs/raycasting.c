@@ -95,6 +95,7 @@ int	render_frame(void *param)
 	int			x;
 
 	cube3d = (t_cube3d *)param;
+	update_movement(cube3d);
 	x = 0;
 	while (x < WIN_WIDTH)
 	{
