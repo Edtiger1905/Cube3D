@@ -32,7 +32,7 @@ The program requires a scene description file with the `.cub` extension as its f
 
 ## Versione Italiana
 *This project has been created as part of the 42 curriculum by evera, epandele.*
-*(Questo progetto è stato creato come parte del curriculum 42 da evera, epandele.)*
+*(Questo progetto è stato creato come parte del curriculum 42 da epandele, evera.)*
 
 ### Descrizione
 cub3D è un progetto di grafica che consiste nel creare una rappresentazione grafica 3D "realistica" dell'interno di un labirinto da una prospettiva in prima persona. È sviluppato utilizzando la libreria miniLibX e si basa sui principi del ray-casting, fortemente ispirato al famoso gioco Wolfenstein 3D (il primo FPS mai creato). L'obiettivo principale è esplorare il ray-casting, applicare la matematica per creare algoritmi eleganti e realizzare una vista dinamica all'interno di un labirinto in cui il giocatore deve trovare la propria strada.
