@@ -1,7 +1,7 @@
-NO ./textures/north.xmp
-SO ./textures/south.xmp
+NO ./textures/north.xpm
+SO ./textures/south.xpm
 
-WE ./textures/west.xmp
+WE ./textures/west.xpm
 
 F 220,100,0
 C 225,30,0

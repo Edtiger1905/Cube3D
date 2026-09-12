@@ -1,7 +1,7 @@
-NO ./textures/north.xmp
-SO ./textures/south.xmp
-EA ./textures/east.xmp
-WE ./textures/west.xmp
+NO ./textures/north.xpm
+SO ./textures/south.xpm
+EA ./textures/east.xpm
+WE ./textures/west.xpm
 
         1111111111111111111111111
         1000000000110000000000001
