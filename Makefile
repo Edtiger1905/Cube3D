@@ -2,7 +2,8 @@ NAME		=	cub3d
 
 SRCDIR		=	srcs
 OBJDIR		=	obj
-SRCS		=	free_memory.c \
+SRCS		=	check_map_matrix_closed.c \
+				free_memory.c \
 				init_cube3d.c \
 				init_map.c \
 				init_textures.c \

@@ -11,8 +11,10 @@
 
 typedef struct s_player
 {
-	int			x;
-	int			y;
+	float		x;
+	float		y;
+
+	char		dir;
 }				t_player;
 
 typedef struct s_map
@@ -48,6 +50,9 @@ typedef struct s_cube3d
 
 	t_map		map;
 }				t_cube3d;
+
+// check_map_matrix_close.c
+void			check_map_matrix_closed(t_cube3d *cube3d);
 
 // free_memory.c
 void			flush_gnl(t_cube3d *cube3d);

@@ -108,8 +108,9 @@ static void	set_player_position(t_map *map)
 		}
 		y++;
 	}
-	map->player.x = x;
-	map->player.y = y;
+	map->player.x = x + 0.5;
+	map->player.y = y + 0.5;
+	map->player.dir = map->matrix[y][x];
 }
 
 static void	print_map(t_cube3d *cube3d)
@@ -126,8 +127,9 @@ static void	print_map(t_cube3d *cube3d)
 		i++;
 	}
 	printf("--- END OF THE MAP (%d lines) ---\n", i);
-	printf("Player position:\nx: %d\ny: %d\n", cube3d->map.player.x,
+	printf("Player position:\nx: %f\ny: %f\n", cube3d->map.player.x,
 		cube3d->map.player.y);
+	printf("Player direction: %c\n", cube3d->map.player.dir);
 }
 
 void	init_map(t_cube3d *cube3d)
@@ -141,5 +143,6 @@ void	init_map(t_cube3d *cube3d)
 	set_matrix(cube3d);
 	is_valid_player(cube3d);
 	set_player_position(&cube3d->map);
+	check_map_matrix_closed(cube3d);
 	print_map(cube3d);
 }
